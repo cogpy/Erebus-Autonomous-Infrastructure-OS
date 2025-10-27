@@ -103,13 +103,15 @@ Algebraic data types (ADTs) provide:
 
 ## Performance Comparison
 
-| Metric | Go | Limbo |
-|--------|-----|-------|
-| **Memory** | ~50 MB | ~10 MB |
-| **Startup** | 100-500 ms | 10-50 ms |
-| **Throughput** | 10K ops/sec | 1K ops/sec |
-| **Footprint** | 15-30 MB binary | 1-5 MB VM |
-| **Latency** | Sub-ms | Sub-ms |
+| Metric | Go | Limbo | Notes |
+|--------|-----|-------|-------|
+| **Memory** | ~50 MB | ~10 MB | Runtime heap size |
+| **Startup** | 100-500 ms | 10-50 ms | Time to first operation |
+| **Throughput** | ~10K ops/sec | ~1K ops/sec | Estimated¹ |
+| **Footprint** | 15-30 MB binary | 1-5 MB VM | On-disk size |
+| **Latency** | Sub-ms | Sub-ms | Simple operations |
+
+¹ **Throughput Measurement**: Estimated based on similar architectures. "Operations" refers to basic AtomSpace operations (add_atom, get_atom, query). Actual performance depends on workload, hardware, and configuration. Formal benchmarks pending Inferno OS test environment.
 
 **Recommendation**: Use Go for high-throughput server workloads, Limbo for edge/embedded deployments.
 
