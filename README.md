@@ -30,6 +30,17 @@ Erebus now features a **pure Golang implementation of an OpenCog-inspired cognit
 
 See [Cognitive Architecture Documentation](./backend/internal/cognitive/README.md) for details.
 
+### 🌟 Inferno Limbo Implementation (NEW!)
+Erebus now includes a **complementary pure Limbo implementation** of the cognitive architecture for the Inferno OS:
+
+- **Dis Virtual Machine**: Platform-independent bytecode execution
+- **Lightweight Runtime**: Minimal footprint for edge/embedded systems  
+- **Complete Feature Parity**: AtomSpace, Inference, Agents, and Pipelines
+- **Portable**: Runs on diverse platforms from IoT to cloud
+- **AgentZero Integration**: Autonomous agent framework in Limbo
+
+See [Limbo Implementation Documentation](./backend/limbo/docs/README.md) for details.
+
 ---
 
 ## 📂 Project Structure
@@ -39,7 +50,7 @@ erebus/
 │   ├── cmd/                   # Entry points for services
 │   │   └── erebusd/          # Main server with cognitive engine
 │   ├── internal/              # Private app modules
-│   │   ├── cognitive/        # 🧠 Cognitive architecture (NEW!)
+│   │   ├── cognitive/        # 🧠 Cognitive architecture (Go)
 │   │   │   ├── atomspace/   # Knowledge representation
 │   │   │   ├── inference/   # Parallel inference engine
 │   │   │   ├── sharding/    # Dynamic sharding system
@@ -50,6 +61,11 @@ erebus/
 │   │   ├── health/          # Health checks
 │   │   ├── metrics/         # Prometheus metrics
 │   │   └── ...              # Other modules
+│   ├── limbo/                # 🌟 Inferno Limbo implementation (NEW!)
+│   │   ├── modules/         # Limbo modules (.m/.b files)
+│   │   ├── dis/             # Dis VM runtime and loader
+│   │   ├── examples/        # Example Limbo programs
+│   │   └── docs/            # Limbo documentation
 │   ├── examples/             # Example programs
 │   └── pkg/                  # Public reusable packages
 ├── deploy/                    # Infrastructure (Terraform, Helm, K8s manifests)
@@ -111,6 +127,24 @@ curl http://localhost:8080/api/cognitive/tenants/my-tenant/stats
 
 See [Cognitive Architecture Documentation](./backend/internal/cognitive/README.md) for complete API reference.
 
+### Limbo (Inferno OS)
+```bash
+cd backend/limbo
+
+# Build Limbo modules (requires Inferno OS)
+./build.sh
+
+# Run cognitive demo
+emu examples/cognitive_demo.dis
+
+# Or in hosted Inferno
+/dis/limbo/examples/cognitive_demo.dis
+```
+
+The Limbo implementation provides the same cognitive features in a lightweight, portable format ideal for edge devices and embedded systems.
+
+See [Limbo Implementation Documentation](./backend/limbo/docs/README.md) and [Quick Reference](./backend/limbo/docs/QUICKREF.md).
+
 ### Frontend
 ```bash
 cd frontend
@@ -133,12 +167,17 @@ terraform apply
 - Prometheus for metrics
 - Custom cognitive architecture
 
-**Cognitive Engine**:
-- Pure Golang implementation
-- Channel-based concurrency
-- Hypergraph knowledge representation
-- Parallel inference engine
-- Agent-based automation
+**Cognitive Engine** (Dual Implementation):
+- **Go Implementation**: Production-ready with REST API
+  - Channel-based concurrency
+  - Hypergraph knowledge representation
+  - Parallel inference engine
+  - Agent-based automation
+- **Limbo Implementation**: Portable alternative for Inferno OS
+  - Dis VM bytecode execution
+  - Lightweight runtime for edge/embedded
+  - Feature parity with Go version
+  - Platform-independent distribution
 
 **Frontend**: Next.js + TypeScript
 
