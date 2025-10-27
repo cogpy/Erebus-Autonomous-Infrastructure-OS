@@ -6,7 +6,16 @@
 set -e
 
 BASE_URL="http://localhost:8080"
-TENANT_ID="test-tenant-$$"
+TENANT_ID="test-tenant-$(date +%s%N)"
+
+# Cleanup function
+cleanup() {
+    echo "Cleaning up tenant resources..."
+    curl -s -X DELETE "$BASE_URL/api/cognitive/tenants/$TENANT_ID" >/dev/null 2>&1 || true
+}
+
+# Set trap for cleanup on exit
+trap cleanup EXIT
 
 echo "=== Erebus Cognitive Engine API Demo ==="
 echo ""

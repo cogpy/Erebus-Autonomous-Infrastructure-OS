@@ -67,9 +67,10 @@ func main() {
 	
 	newAtoms, err := engine.RunInference(ctx, tenantID, 10)
 	if err != nil {
-		log.Printf("Inference error: %v", err)
+		fmt.Printf("⚠ Inference error: %v\n", err)
+		fmt.Println("Continuing with remaining operations...\n")
 	} else {
-		fmt.Printf("Inference created %d new atoms through deduction!\n", len(newAtoms))
+		fmt.Printf("✓ Inference created %d new atoms through deduction!\n", len(newAtoms))
 		
 		if len(newAtoms) > 0 {
 			fmt.Println("\nSome inferred relationships:")

@@ -60,6 +60,13 @@ erebus/
 
 ## 🚀 Getting Started
 
+### Prerequisites
+
+- **Go**: Version 1.23.0 or higher
+- **Make**: For building the project
+- **jq**: For running the API test script (optional)
+- **curl**: For API testing (optional)
+
 ### Backend (with Cognitive Engine)
 ```bash
 cd backend
@@ -76,7 +83,7 @@ make run
 # Run the cognitive demo
 go run examples/cognitive_demo.go
 
-# Test the cognitive API (requires server running)
+# Test the cognitive API (requires server running and jq installed)
 ./examples/test_cognitive_api.sh
 ```
 
