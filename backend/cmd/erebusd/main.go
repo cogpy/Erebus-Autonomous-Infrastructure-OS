@@ -10,6 +10,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/Avik2024/erebus/backend/internal/cognitive"
+	"github.com/Avik2024/erebus/backend/internal/cognitive/api"
 	"github.com/Avik2024/erebus/backend/internal/config"
 	"github.com/Avik2024/erebus/backend/internal/health"
 	"github.com/Avik2024/erebus/backend/internal/logging"
@@ -113,6 +115,21 @@ func main() {
 	)
 
 	// ----------------------------
+	// Initialize Cognitive Engine
+	// ----------------------------
+	logger.Info("initializing cognitive engine...")
+	cognitiveConfig := cognitive.DefaultConfig()
+	cognitiveEngine := cognitive.NewCognitiveEngine(cognitiveConfig)
+	defer cognitiveEngine.Close()
+	
+	logger.Info("cognitive engine initialized",
+		zap.Int("num_shards", cognitiveConfig.NumShards),
+		zap.Int("workers_per_shard", cognitiveConfig.WorkersPerShard),
+		zap.Int("inference_workers", cognitiveConfig.InferenceWorkers),
+		zap.Int("agent_workers", cognitiveConfig.AgentWorkers),
+		zap.Int("pipeline_workers", cognitiveConfig.PipelineWorkers))
+
+	// ----------------------------
 	// Create router & middlewares
 	// ----------------------------
 	r := chi.NewRouter()
@@ -129,6 +146,12 @@ func main() {
 	r.Get("/api/version", version.Handler)
 
 	// ----------------------------
+	// Cognitive API Endpoints
+	// ----------------------------
+	cognitiveHandler := api.NewCognitiveHandler(cognitiveEngine)
+	cognitiveHandler.RegisterRoutes(r)
+
+	// ----------------------------
 	// User & Projects Endpoints
 	// ----------------------------
 	r.Post("/api/register", Register)
@@ -143,7 +166,7 @@ func main() {
 
 	// Root endpoint
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = w.Write([]byte("Erebus"))
+		_, _ = w.Write([]byte("Erebus - Autonomous Infrastructure OS with Cognitive Engine"))
 	})
 
 	// ----------------------------
