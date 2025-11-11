@@ -8,3 +8,6 @@
 .idea
 .vscode
 .env
+# Limbo/Inferno compiled files
+*.dis
+*.sbl
